@@ -9,7 +9,8 @@ workflow:
 stages:
   - test
 
-test:
+unit_tests:
+    stage: test
     image: node:18-alpine3.17
     before_script:
         - npm install
