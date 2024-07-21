@@ -7,6 +7,11 @@ on:
       - main
       - 'feature/*'
 
+env:
+    MONGO_URI: 'mongodb+srv://supercluster.x2ilhaf.mongodb.net/superdata'
+    MONGO_USERNAME: superuser
+    MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+
 jobs:
     unit-testing:
         name: Unit Testing
