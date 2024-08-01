@@ -58,6 +58,7 @@ jobs:
             with:
               name: Mocha-Test-Result-${{ matrix.operating_system }}-node${{ matrix.nodejs_version }}
               path: test-results.xml
+
     code-coverage:
         name: Code Coverage
         container: 
@@ -100,6 +101,7 @@ jobs:
                 name: Code-Coverage-Result
                 path: coverage
                 retention-days: 5
+
     docker:
       name: Containerization
       needs: [
@@ -155,4 +157,21 @@ jobs:
             tags: |
                 ${{ secrets.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
                 ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }}
-        
+    
+    dev-deploy:
+        needs: docker
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Repository
+            uses: actions/checkout@v4
+          
+          - name: Install Kubectl CLI
+            uses: azure/setup-kubectl@v3
+            with:
+              version: 'v1.26.0'
+
+          - name: Fetch Kubernetes Cluster Details
+            run: |
+              kubectl version --short
+              echo --------------------------------------
+              kubectl get nodes
