@@ -168,7 +168,7 @@ jobs:
           - name: Install Kubectl CLI
             uses: azure/setup-kubectl@v3
             with:
-              version: 'v1.26.0'
+              version: 'v1.24.0'
              
           - name: Set Kubeconfig
             uses: azure/k8s-set-context@v4
